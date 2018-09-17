@@ -14,21 +14,18 @@ bool TcpServer::InitWinSock() {
 		return false;
 	}
 	cout << "WinSock Init Succes" << endl;
-	return true;
-}
 
-
-bool TcpServer::CreateSocket() {
 	listenSock = socket(AF_INET, SOCK_STREAM, 0);
 	if (listenSock == INVALID_SOCKET) {
 		cout << "Sock Create Failed" << endl;
 		return false;
 	}
 	cout << "Sock Create Success" << endl;
+
 	return true;
 }
 
-bool TcpServer::BindIPandPort(const string ip, const unsigned short port) {
+bool TcpServer::ListenSocket(const string ip, const unsigned short port) {
 	hostaddr.sin_family = AF_INET;
 	hostaddr.sin_port = htons(port);
 
@@ -41,16 +38,14 @@ bool TcpServer::BindIPandPort(const string ip, const unsigned short port) {
 		cout << "Host IP Bind Failed" << endl;
 		return false;
 	}
-	return true;
-}
 
-bool TcpServer::ListenSocket() {
-	int error = listen(listenSock, 3);
+	error = listen(listenSock, 3);
 	if (error != 0) {
 		cout << "Socket Listen Failed" << endl;
 		return false;
 	}
 	cout << "Socket Listening..." << endl;
+
 	return true;
 }
 
@@ -60,7 +55,7 @@ bool TcpServer::WaitClientConnect() {
 	clientSock = accept(listenSock, (struct sockaddr*)&clientaddr, &len);
 	cout << "Client Socket Number:" << clientSock << endl;
 	if (clientSock == INVALID_SOCKET) {
-		cout << "Clietn Connect Failed" << endl;
+		cout << "Client Connect Failed" << endl;
 		cout << WSAGetLastError() << endl;
 		return false;
 	}

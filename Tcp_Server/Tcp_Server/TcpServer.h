@@ -25,12 +25,12 @@ public:
 
 	TcpServer();
 	bool InitWinSock();
-	bool CreateSocket();
-	bool BindIPandPort(const string ip, const unsigned short port);
-	bool ListenSocket();
+	bool ListenSocket(const string ip, const unsigned short port);
 	bool WaitClientConnect();
+
 	bool SendData(const string &data);
 	bool ReceiveData();
+
 	int CloseSocket();
 	void ShutdownSocket();
 	string GetData();
